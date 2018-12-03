@@ -7,13 +7,15 @@ public class PlayerController : MonoBehaviour {
 	//Public Variables
 	public float walkSpeed;
 	public float rotationSpeed;
+	public float health;
+	public float healthGainedFromPickup;
 
 	//Private Variables
-
+	private float maxHealth;
 
 	// Use this for initialization
 	void Start () {
-		
+		maxHealth = health;
 	}
 	
 	// Update is called once per frame
@@ -27,5 +29,13 @@ public class PlayerController : MonoBehaviour {
 
 		transform.Translate (0.0f, 0.0f, moveVertical * walkSpeed);
 		transform.Rotate(0.0f, moveHorizontal * rotationSpeed, 0.0f);
+	}
+
+	void OnTriggerStay (Collider other){
+		if (other.tag == "Health" && Input.GetKeyDown(KeyCode.U)) {
+			if (health < maxHealth && health > 0.0f) {
+				health += healthGainedFromPickup;
+			}
+		}
 	}
 }

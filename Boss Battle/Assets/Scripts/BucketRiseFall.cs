@@ -10,6 +10,7 @@ public class BucketRiseFall : MonoBehaviour {
     public Vector3 maxHeight;
     public Vector3 minHeight;
     public float lerpPosition;
+	public float translationValue;
 
     //Private Variables
     private bool switchOneActive;
@@ -28,11 +29,17 @@ public class BucketRiseFall : MonoBehaviour {
 
         if (switchOneActive == true && switchTwoActive == true)
         {
-            transform.position = Vector3.Lerp(maxHeight, minHeight, lerpPosition * Time.deltaTime);
+			if(lerpPosition < 1.0f){
+            	transform.position = Vector3.Lerp(maxHeight, minHeight, lerpPosition);
+				lerpPosition += 1.0f / translationValue;
+			}
         }
         else
         {
-            transform.position = Vector3.Lerp(minHeight, maxHeight, lerpPosition * Time.deltaTime);
+			if (lerpPosition > 0.0f) {
+				transform.position = Vector3.Lerp (maxHeight, minHeight, lerpPosition);
+				lerpPosition -= 1.0f / translationValue;
+			}
         }
     }
 }
